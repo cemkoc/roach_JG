@@ -2,16 +2,16 @@
 %%% early version - does not read raw telemetry file - needs processed file
 %%%%%%%%%%%%%%%%%%%
 
-disp('!!requires telem file and processed file!!')
+disp('!!requires telem file in .txt format!!')
 
 clear % clear all variables between plots
 figure(1)
 clf
 %data_file ='./2-28-15_data/behavior4_2Hz.txt'
 %data_file ='../python/Data/2015.12.30_16.09.44_trial_imudata.txt';
-data_file ='../python/Data/2015.12.26_19.00.08_trial_imudata.txt';
-data = csvread('./2-28-15_data/behavior4_2Hz.txt',9,0);
-%data = csvread(data_file,9,0);
+%data_file ='../python/Data/2015.12.26_19.00.08_trial_imudata.txt';
+%data = csvread('./2-28-15_data/behavior4_2Hz.txt',9,0);
+data = csvread('../Python/Data/2016.03.03_17.44.35_nomove_inverted.txt')
 legScale = 95.8738e-6; % 16 bit to radian
 vref = 3.3; % for voltage conversion
 vdivide = 3.7/2.7;  % for battery scaling

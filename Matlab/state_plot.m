@@ -3,8 +3,8 @@
 %%% shell data
 %%%%%%%%%%%%%%%%%%%
 
-figure(3)
-clf
+%figure(3)
+%clf
 
 legScale = 95.8738e-6; % 16 bit to radian
 vref = 3.3; % for voltage conversion
