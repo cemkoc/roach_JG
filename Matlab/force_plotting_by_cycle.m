@@ -1,8 +1,8 @@
 %close all
 %clear all
 
-%cd '../telemetry/all data';
-%D:\Dropbox\Work\Grass\working\robot\shell force\5-11-15_data_with_chen\data\';
+%%%%%%%%%%%%%%%
+% plot including synchronize with leg cycle
 
 %load('D:\Dropbox\Work\Grass\working\robot\shell force\5-11-15_data_with_chen\N_matrix_trial9.mat')
 load('../telemetry/N_matrix_trial9.mat')
@@ -49,7 +49,7 @@ ftsz=15;  % font size
 
 %%%%%%%%%%%%%%%%%%%%%%%%
 % butterworth filter
-% sample rate is 1 kHz, try cutoff frequency of 20 Hz
+% sample rate is 1 kHz, try cutoff frequency of 40 Hz
 Wn = 40/1000;
 FiltOrder = 4; % filter order
 [den,num]=butter(FiltOrder,Wn);
@@ -271,5 +271,7 @@ xlabel('Leg position (rad)','FontSize', 18, 'FontName', 'CMU Serif');
 axes(ha(6));
 xlabel('Leg position (rad)','FontSize', 18, 'FontName', 'CMU Serif');
 
-
+%%%%%%%%%%%%%%%%%%%
+% now plot data on a cycle by cycle basis
+cycle_plot
 
