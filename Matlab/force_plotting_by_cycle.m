@@ -12,6 +12,7 @@ load('../telemetry/N_matrix_trial9.mat')
 % T = csvread('../../roach_JG/python/Data/2016.03.03_19.11.13_tile0.4Hz_35grambox.txt',9,0)
 %filename = '../../roach_JG/python/Data/2016.03.12_17.10.37_trial_imudata.txt'
 filename = '../../../../GroupMeet/SkinProc/2016.03.06_19.44.56_trial_3_imudata.txt'
+%filename = '../../../../GroupMeet/SkinProc/sliding5.txt'
 T = csvread(filename,9,0);
 data = T;  % data is used by state_plot
 state_plot  % process robot state information from telemetry file
@@ -50,7 +51,7 @@ ftsz=15;  % font size
 %%%%%%%%%%%%%%%%%%%%%%%%
 % butterworth filter
 % sample rate is 1 kHz, try cutoff frequency of 40 Hz
-Wn = 40/1000;
+Wn = 60/1000;
 FiltOrder = 4; % filter order
 [den,num]=butter(FiltOrder,Wn);
 Frecov1=filter(den,num,Frecov1);
