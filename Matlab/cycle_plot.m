@@ -97,7 +97,8 @@ for k=seg3:seg4
     'b-','LineWidth',1);
 end
 set(ha(2),'YTickLabel','') % only label on left plot
-axis([0,2*pi,-2.5,2.5]); legend('Right torque','Left torque')
+axis([0,2*pi,-2.5,2.5]); 
+legend('Right torque','Left torque','Location','north')
 title('after contact','FontSize', 12, 'FontName', 'CMU Serif');
 %
 %%%%%%%% body forces before and after contact with walls %%%%%%%%%%
@@ -184,11 +185,11 @@ clf;
 ha = tight_subplot(2,1,[.05 0.05],[.1 .1],[.1 .1]);
 % ha = tight_subplot(rows, cols, [gapy gapx], marg_h, marg_w)
 axes(ha(1));
-stem(0:16,abs(a),'k','linewidth',1)
+stem(0:16,abs(a),'k','linewidth',2)
 ylabel('{|a_k|}','FontSize', 14, 'FontName', 'CMU Serif');
 
 axes(ha(2));
-stem(0:16,abs(b),'k','linewidth',1)
+stem(0:16,abs(b),'k','linewidth',2)
 ylabel('{|b_k|}','FontSize', 14, 'FontName', 'CMU Serif');
 xlabel('frequency k','FontSize', 18, 'FontName', 'CMU Serif');
 

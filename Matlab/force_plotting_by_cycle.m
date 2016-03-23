@@ -11,7 +11,8 @@ load('../telemetry/N_matrix_trial9.mat')
 %T = csvread('../../roach_JG/python/Data/2016.03.03_17.44.35_nomove_inverted.txt',9,0);
 % T = csvread('../../roach_JG/python/Data/2016.03.03_19.11.13_tile0.4Hz_35grambox.txt',9,0)
 %filename = '../../roach_JG/python/Data/2016.03.12_17.10.37_trial_imudata.txt'
-filename = '../../../../GroupMeet/SkinProc/2016.03.06_19.44.56_trial_3_imudata.txt'
+%filename = '../../../../GroupMeet/SkinProc/2016.03.06_19.44.56_trial_3_imudata.txt'
+filename = '../../../../GroupMeet/SkinProc/2016.03.06_19.16.20_trial_3_imudata.txt'
 %filename = '../../../../GroupMeet/SkinProc/sliding5.txt'
 T = csvread(filename,9,0);
 data = T;  % data is used by state_plot
@@ -51,7 +52,7 @@ ftsz=15;  % font size
 %%%%%%%%%%%%%%%%%%%%%%%%
 % butterworth filter
 % sample rate is 1 kHz, try cutoff frequency of 40 Hz
-Wn = 60/1000;
+Wn = 80/1000;
 FiltOrder = 4; % filter order
 [den,num]=butter(FiltOrder,Wn);
 Frecov1=filter(den,num,Frecov1);
@@ -101,34 +102,35 @@ ha = tight_subplot(7,1,[.02 0],[.1 .08],[.1 .01]);
 axes(ha(1)); plot(time(1:s:end)/1000,TorqueR(1:s:end),...
     'r-','LineWidth',2);
 hold on; plot(time(1:s:end)/1000,-TorqueL(1:s:end),...
-    'b:','LineWidth',2);ylabel('\tau (mN-m)','FontSize', 14, 'FontName', 'CMU Serif');axis([0,maxt,-2.1,2.1]); legend('Right leg','Left leg')
-axes(ha(2)); plot(time(1:s:end)/1000,GyroX(1:s:end),...
-    'r','LineWidth',1);
-hold on; plot(time(1:s:end)/1000,GyroY(1:s:end),...
-    'b','LineWidth',1);
-    plot(time(1:s:end)/1000,GyroZ(1:s:end),...
-    'g','LineWidth',1);
-ylabel('d\theta (rad)','FontSize', 14, 'FontName', 'CMU Serif');
-axis([0,maxt,-10.1,10.1]); legend('Gx','Gy', 'Gz')
+    'b:','LineWidth',2);ylabel('\tau (mN-m)','FontSize', 14, 'FontName', 'CMU Serif');axis([0,maxt,-2.1,2.1]); 
+legend('Right leg','Left leg','Location','west')
+axes(ha(2)); 
+plot(time(1:s:end)/1000,AngleZ(1:s:end),'g','LineWidth',1);
+% plot(time(1:s:end)/1000,GyroX(1:s:end),'r','LineWidth',1);
+hold on; 
+%plot(time(1:s:end)/1000,GyroY(1:s:end),'b','LineWidth',1);
+%plot(time(1:s:end)/1000,AngleZ(1:s:end),    'g','LineWidth',1);
+ylabel('\theta_z (rad)','FontSize', 14, 'FontName', 'CMU Serif');
+axis([0,maxt,-1,1]); % legend('Gx','Gy', 'Gz','Location','west')
    
  %
 axes(ha(3)); plot(time(1:s:end)/1000,AX(1:s:end),'k','LineWidth',2);
-    ylabel('x" (m/s^2)','FontSize', 14, 'FontName', 'CMU Serif');axis([0,maxt,-15,15]);
+    ylabel('x" (m/s^2)','FontSize', 14, 'FontName', 'CMU Serif');axis([0,maxt,-25,25]);
 axes(ha(4)); plot(time(1:s:end)/1000,AY(1:s:end),'k','LineWidth',2);
-    ylabel('y" (m/s^2)','FontSize', 14, 'FontName', 'CMU Serif');axis([0,maxt,-15,15]);
+    ylabel('y" (m/s^2)','FontSize', 14, 'FontName', 'CMU Serif');axis([0,maxt,-25,25]);
 axes(ha(5)); plot(time(1:s:end)/1000,AZ(1:s:end),'k','LineWidth',2);
-    ylabel('z" (m/s^2)','FontSize', 14, 'FontName', 'CMU Serif');axis([-0,maxt,-5,25]);
+    ylabel('z" (m/s^2)','FontSize', 14, 'FontName', 'CMU Serif');axis([-0,maxt,-5,30]);
 %%%%% now plot contact forces and torques %%%%%%%%%%
 axes(ha(6)); plot(time(1:s:end)/1000,Frecov1(1:s:end,1),'r','LineWidth',2);  
 hold on; plot(time(1:s:end)/1000,Frecov1(1:s:end,2),'b','LineWidth',2); 
     plot(time(1:s:end)/1000,Frecov1(1:s:end,3),'g','LineWidth',2); 
 ylabel('F(N)','FontSize', 14, 'FontName', 'CMU Serif');
-    axis([0,maxt,-1.2,1.2]); legend('F_x','F_y','F_z')
+    axis([0,maxt,-1.5,1.5]); legend('F_x','F_y','F_z','Location','west')
 axes(ha(7)); plot(time(1:s:end)/1000,Frecov1(1:s:end,4),'r','LineWidth',2);  
 hold on; plot(time(1:s:end)/1000,Frecov1(1:s:end,5),'b','LineWidth',2); 
     plot(time(1:s:end)/1000,Frecov1(1:s:end,6),'g','LineWidth',2); 
 ylabel('M (mN-M)','FontSize', 14, 'FontName', 'CMU Serif');
-    axis([0,maxt,-35,35]); legend('M_x','M_y','M_z')
+    axis([0,maxt,-50,50]); legend('M_x','M_y','M_z','Location','west')
 
 set(ha(1:6),'XTickLabel','') % only 1 time lable
 for i = 1:7
@@ -179,7 +181,7 @@ axes(ha(3)); plot(time(1:s:end)/1000,Frecov1(1:s:end,1),'r','LineWidth',2);
 hold on; plot(time(1:s:end)/1000,Frecov1(1:s:end,2),'b','LineWidth',2); 
     plot(time(1:s:end)/1000,Frecov1(1:s:end,3),'g','LineWidth',2); 
 ylabel('F(N)','FontSize', 14, 'FontName', 'CMU Serif');
-    axis([0,1.1*maxt,-0.9,0.9]); legend('F_x','F_y','F_z')
+    axis([0,1.1*maxt,-1,1]); legend('F_x','F_y','F_z')
 axes(ha(4)); plot(time(1:s:end)/1000,Frecov1(1:s:end,4),'r','LineWidth',2);  
 hold on; plot(time(1:s:end)/1000,Frecov1(1:s:end,5),'b','LineWidth',2); 
     plot(time(1:s:end)/1000,Frecov1(1:s:end,6),'g','LineWidth',2); 
