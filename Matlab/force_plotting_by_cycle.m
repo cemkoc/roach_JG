@@ -11,19 +11,22 @@ load('../telemetry/N_matrix_trial9.mat')
 %T = csvread('../../roach_JG/python/Data/2016.03.03_17.44.35_nomove_inverted.txt',9,0);
 % T = csvread('../../roach_JG/python/Data/2016.03.03_19.11.13_tile0.4Hz_35grambox.txt',9,0)
 %filename = '../../roach_JG/python/Data/2016.03.12_17.10.37_trial_imudata.txt'
-%filename = '../../../../GroupMeet/SkinProc/2016.03.06_19.44.56_trial_3_imudata.txt'
-filename = '../../../../GroupMeet/SkinProc/2016.03.06_19.16.20_trial_3_imudata.txt'
+filename = '../../../../GroupMeet/SkinProc/2016.03.06_19.44.56_trial_3_imudata.txt'
+%filename = '../../../../GroupMeet/SkinProc/2016.03.06_19.16.20_trial_3_imudata.txt'
 %filename = '../../../../GroupMeet/SkinProc/sliding5.txt'
 T = csvread(filename,9,0);
 data = T;  % data is used by state_plot
 state_plot  % process robot state information from telemetry file
-
-S = T(:,17:24);
-A = [S(:,1),S(:,1).^2,S(:,1).^3,S(:,2),S(:,2).^2,S(:,2).^3,S(:,3),S(:,3).^2,S(:,3).^3,S(:,4),S(:,4).^2,S(:,4).^3,S(:,5),S(:,5).^2,S(:,5).^3,S(:,6),S(:,6).^2,S(:,6).^3,S(:,7),S(:,7).^2,S(:,7).^3,S(:,8),S(:,8).^2,S(:,8).^3];
-Frecov = A*N;
-Frecov1 = Frecov;
-i = 2;
-
+VREP = 1 %  use telem data from vrep which has force torque data already in column form
+if (VREP == 1)
+    S = T(:,17:24);
+    A = [S(:,1),S(:,1).^2,S(:,1).^3,S(:,2),S(:,2).^2,S(:,2).^3,S(:,3),S(:,3).^2,S(:,3).^3,S(:,4),S(:,4).^2,S(:,4).^3,S(:,5),S(:,5).^2,S(:,5).^3,S(:,6),S(:,6).^2,S(:,6).^3,S(:,7),S(:,7).^2,S(:,7).^3,S(:,8),S(:,8).^2,S(:,8).^3];
+    Frecov = A*N;
+    Frecov1 = Frecov;
+    i = 2;
+else
+    Frecov1=T(:,17:22);
+end
 %display('line 21')
 %return; % debugging
 %eliminate duplicates
