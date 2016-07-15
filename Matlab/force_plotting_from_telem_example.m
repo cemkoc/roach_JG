@@ -12,7 +12,7 @@ load('../telemetry/N_matrix_trial9.mat')
 % T = csvread('../../roach_JG/python/Data/2016.03.03_19.11.13_tile0.4Hz_35grambox.txt',9,0)
 %filename = '../python/Data/2016.03.12_11.18.36_20grams.txt'
 %filename = '../../TelemetryData/TactileJun16/2016.06.30_18.39.28_lift.txt'
-filename = '../../TelemetryData/TactileJun16/2016.07.01_20.06.01_50gram-invert.txt'
+filename = '2016.07.15_15.24.36_trial_imudata.txt'
 T = csvread(filename,9,0);
 data = T;  % data is used by state_plot
 state_plot  % process robot state information from telemetry file

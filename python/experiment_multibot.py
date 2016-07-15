@@ -54,11 +54,11 @@ def main():
     #motorgains = [10,0,10,0,0, 10,0,10,0,0]  # basically turn robot off
     # left motor: motorgains = [1800,100,200,0,200, 0,0,0,0,0]
     #motorgains = [0,0,0,0,0, 1800,100,200,0,200] # rght motor only
-    # motorgains = [-5000,-400,-200,0,-300, -5000,-400,-200,0,-300] # tactilebot June 2016
+    motorgains = [5000,400,200,0,300, 5000,400,200,0,300] # tactilebot June 2016
     #motorgains = [0,0,0,0,0, -2000,0,0,0,-200] # rght motor only
-    motorgains = [0,0,0,0,0 , 0,0,0,0,0]
+    # motorgains = [0,0,0,0,0 , 0,0,0,0,0]
 
-    simpleAltTripod = GaitConfig(motorgains, rightFreq=0.4, leftFreq=0.4) # Parameters can be passed into object upon construction, as done here.
+    simpleAltTripod = GaitConfig(motorgains, rightFreq=1, leftFreq=1) # Parameters can be passed into object upon construction, as done here.
     simpleAltTripod.phase = PHASE_180_DEG                             # Or set individually, as here
     simpleAltTripod.deltasLeft = [0.25, 0.25, 0.25]
     simpleAltTripod.deltasRight = [0.25, 0.25, 0.25]
@@ -68,7 +68,7 @@ def main():
     R1.setGait(simpleAltTripod)
 
     # example , 0.1s lead in + 2s run + 0.1s lead out
-    EXPERIMENT_RUN_TIME_MS     = 5000 #ms #65000
+    EXPERIMENT_RUN_TIME_MS     = 4000 #ms #65000
     EXPERIMENT_LEADIN_TIME_MS  = 200  #ms
     EXPERIMENT_LEADOUT_TIME_MS = 200  #ms
     
