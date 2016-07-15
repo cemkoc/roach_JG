@@ -79,9 +79,6 @@ def main():
             r.setupTelemetryDataTime(EXPERIMENT_LEADIN_TIME_MS + EXPERIMENT_RUN_TIME_MS + EXPERIMENT_LEADOUT_TIME_MS)
             r.eraseFlashMem()
         
-    # Pause and wait to start run, including lead-in time
-    print "zero position to reduce peak current"
-    R1.zeroPosition()
     print "  ***************************"
     print "  *******    READY    *******"
     print "  ***************************"
