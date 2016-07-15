@@ -318,9 +318,10 @@ class Velociroach:
         time.sleep(0.1) #built-in holdoff, since reset apparently takes > 50ms
 
     ############TACTILE COMMANDS added by jgoldberg############
-
-    rows = 0
-    cols = 0
+# RSF 7/1/2016: try Row 1, col 8 for streaminh=g. was r=0, c=0
+    rows = 1
+    cols = 8
+    N = 1  # kludge scale factor from Josh?
 
     def samplePixel(self, row, col):
         self.tx(0, command.TACTILE, 'A' + chr(row) + chr(col))

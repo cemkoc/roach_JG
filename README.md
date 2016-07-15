@@ -1,12 +1,22 @@
 RoACH
 ==========
-This repository contains firmware and python control code for the VelociRoACH robots, or other derived robots equipped with an ImageProc 2.5 board.
+This repository contains firmware and python control code for Josh's VelociRoACH robot
+with the SkinProc board for the tactile shell.
 
-The 'master' branch is intended to provide a working configuration for the VelociRoACH robot.  
-This branch should be expected to always build, work, and function.
+Settings:
+https://github.com/ronf-ucb/imageproc-settings
 
-Repositories imageproc-lib and imageproc-settings are required to build.  
-Relative paths are set so that you need to clone each repository into the same root directory.
+Main code:
+https://github.com/ronf-ucb/roach_JG/tree/tactile
+
+Library: 27 April 2015 branch compiles ok. Later versions changed encoders, PID, radio, packets etc.
+https://github.com/biomimetics/imageproc-lib/tree/c331ed52a4824d13d8d430589e5c245effd4c5d0
+
+The python code to run the robot is:
+python experiment_mulitbot.py
+
+To plot data use: force_plotting_from_telem_example.m
+
 
 Build status: [![Build Status](https://travis-ci.org/biomimetics/roach.svg?branch=master)](https://travis-ci.org/biomimetics/roach)  
 Built against biomimetics/roach 'master branch:

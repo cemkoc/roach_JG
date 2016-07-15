@@ -52,8 +52,11 @@ def main():
     #  [ Kp , Ki , Kd , Kaw , Kff     ,  Kp , Ki , Kd , Kaw , Kff ]
     #    ----------LEFT----------        ---------_RIGHT----------
     #motorgains = [10,0,10,0,0, 10,0,10,0,0]  # basically turn robot off
-    motorgains = [1800,100,200,0,200, 1800,100,200,0,200]
-    #motorgains = [0,0,0,0,0 , 0,0,0,0,0]
+    # left motor: motorgains = [1800,100,200,0,200, 0,0,0,0,0]
+    #motorgains = [0,0,0,0,0, 1800,100,200,0,200] # rght motor only
+    # motorgains = [-5000,-400,-200,0,-300, -5000,-400,-200,0,-300] # tactilebot June 2016
+    #motorgains = [0,0,0,0,0, -2000,0,0,0,-200] # rght motor only
+    motorgains = [0,0,0,0,0 , 0,0,0,0,0]
 
     simpleAltTripod = GaitConfig(motorgains, rightFreq=0.4, leftFreq=0.4) # Parameters can be passed into object upon construction, as done here.
     simpleAltTripod.phase = PHASE_180_DEG                             # Or set individually, as here
@@ -65,9 +68,9 @@ def main():
     R1.setGait(simpleAltTripod)
 
     # example , 0.1s lead in + 2s run + 0.1s lead out
-    EXPERIMENT_RUN_TIME_MS     = 10000 #ms #65000
-    EXPERIMENT_LEADIN_TIME_MS  = 100  #ms
-    EXPERIMENT_LEADOUT_TIME_MS = 100  #ms
+    EXPERIMENT_RUN_TIME_MS     = 5000 #ms #65000
+    EXPERIMENT_LEADIN_TIME_MS  = 200  #ms
+    EXPERIMENT_LEADOUT_TIME_MS = 200  #ms
     
     # Some preparation is needed to cleanly save telemetry data
     for r in shared.ROBOTS:
@@ -84,7 +87,7 @@ def main():
     print "  ***************************"
     raw_input("  Press ENTER to start run ...")
     print ""
-    R1.skinStream(0)
+    R1.skinStream(0)   ### set to 1 for live streming of data, 0 for storing in Flash, then sending
     time.sleep(0.5)
     R1.startScan()
     time.sleep(0.5)

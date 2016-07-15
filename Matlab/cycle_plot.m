@@ -167,7 +167,7 @@ for k=1:17  % frequency components
 end
 
 l=seg3; 
-x2=Frecov1(xtickmin(l):xtickmax(l+3),2);
+x2=Frecov1(xtickmin(l):xtickmax(l+3),2); % Fy
 N=xtickmax(l+3)-xtickmin(l);  % number of samples
 omega = (0:N)*2*pi/N;
 %FS for second segment

@@ -24,7 +24,8 @@ def handlePacket(src_addr, data):
 
     packet_type = data[0]
     payload_length = ord(data[1])
-
+    print 'packet type=', packet_type
+ #   print('packet_type=%d ' %(packet_type))
     if packet_type == singlepixel:
         temp = map(ord,data)
         print "For pixel ["+str(temp[2])+","+str(temp[3])+"] value = "+str(temp[4]+temp[5]*256)

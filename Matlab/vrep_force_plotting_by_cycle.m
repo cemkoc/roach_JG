@@ -1,28 +1,26 @@
 %close all
 %clear all
 
-%cd '../telemetry/all data';
-%D:\Dropbox\Work\Grass\working\robot\shell force\5-11-15_data_with_chen\data\';
+%%%%%%%%%%%%%%%
+% plot including synchronize with leg cycle
 
 %load('D:\Dropbox\Work\Grass\working\robot\shell force\5-11-15_data_with_chen\N_matrix_trial9.mat')
 load('../telemetry/N_matrix_trial9.mat')
-% T = csvread('velociroach_s=3cm_w=3cm_h=10cm_layer=5_f=10Hz_beetleshell_run3.txt',9,0);
-%T = csvread('../telemetry/alldata/velociroach_s=10cm_w=5.5cm_h=27cm_layer=3_ply=6_f=13Hz_beetleshell_run3.txt',9,0);
-%T = csvread('../../roach_JG/python/Data/2016.03.03_17.44.35_nomove_inverted.txt',9,0);
-% T = csvread('../../roach_JG/python/Data/2016.03.03_19.11.13_tile0.4Hz_35grambox.txt',9,0)
-%filename = '../python/Data/2016.03.12_11.18.36_20grams.txt'
-%filename = '../../TelemetryData/TactileJun16/2016.06.30_18.39.28_lift.txt'
-filename = '../../TelemetryData/TactileJun16/2016.07.01_20.06.01_50gram-invert.txt'
-T = csvread(filename,9,0);
+%filename = '../../roach_JG/python/Data/2016.03.12_17.10.37_trial_imudata.txt'
+filename = '../../../Simulation/VRoach+Shell/data-test1.txt'
+%filename = '../../../Simulation/VRoach+Shell/temp.txt'
+%filename = '../../../../GroupMeet/SkinProc/2016.03.06_19.16.20_trial_3_imudata.txt'
+%filename = '../../../../GroupMeet/SkinProc/sliding5.txt'
+T = csvread(filename,8,0);  % skip first 8 rows
+% roach_JG telem, skip first 9 rows
 data = T;  % data is used by state_plot
 state_plot  % process robot state information from telemetry file
-
-S = T(:,17:24);
-A = [S(:,1),S(:,1).^2,S(:,1).^3,S(:,2),S(:,2).^2,S(:,2).^3,S(:,3),S(:,3).^2,S(:,3).^3,S(:,4),S(:,4).^2,S(:,4).^3,S(:,5),S(:,5).^2,S(:,5).^3,S(:,6),S(:,6).^2,S(:,6).^3,S(:,7),S(:,7).^2,S(:,7).^3,S(:,8),S(:,8).^2,S(:,8).^3];
-Frecov = A*N;
-Frecov1 = Frecov;
-i = 2;
-
+VREP = 1 %  use telem data from vrep which has force torque data already in column form
+if (VREP == 1)
+    Frecov1 = T(:,17:22);
+else
+    Frecov1=T(:,17:21);
+end
 %display('line 21')
 %return; % debugging
 %eliminate duplicates
@@ -50,8 +48,8 @@ ftsz=15;  % font size
 
 %%%%%%%%%%%%%%%%%%%%%%%%
 % butterworth filter
-% sample rate is 1 kHz, try cutoff frequency of 20 Hz
-Wn = 40/1000;
+% sample rate is 1 kHz, try cutoff frequency of 40 Hz
+Wn = 80/1000;
 FiltOrder = 4; % filter order
 [den,num]=butter(FiltOrder,Wn);
 Frecov1=filter(den,num,Frecov1);
@@ -101,34 +99,35 @@ ha = tight_subplot(7,1,[.02 0],[.1 .08],[.1 .01]);
 axes(ha(1)); plot(time(1:s:end)/1000,TorqueR(1:s:end),...
     'r-','LineWidth',2);
 hold on; plot(time(1:s:end)/1000,-TorqueL(1:s:end),...
-    'b:','LineWidth',2);ylabel('\tau (mN-m)','FontSize', 14, 'FontName', 'CMU Serif');axis([0,maxt,-2.1,2.1]); legend('Right leg','Left leg')
-axes(ha(2)); plot(time(1:s:end)/1000,GyroX(1:s:end),...
-    'r','LineWidth',1);
-hold on; plot(time(1:s:end)/1000,GyroY(1:s:end),...
-    'b','LineWidth',1);
-    plot(time(1:s:end)/1000,GyroZ(1:s:end),...
-    'g','LineWidth',1);
-ylabel('d\theta (rad)','FontSize', 14, 'FontName', 'CMU Serif');
-axis([0,maxt,-10.1,10.1]); legend('Gx','Gy', 'Gz')
+    'b:','LineWidth',2);ylabel('\tau (mN-m)','FontSize', 14, 'FontName', 'CMU Serif');axis([0,maxt,-2.1,2.1]); 
+legend('Right leg','Left leg','Location','west')
+axes(ha(2)); 
+plot(time(1:s:end)/1000,AngleZ(1:s:end),'g','LineWidth',1);
+% plot(time(1:s:end)/1000,GyroX(1:s:end),'r','LineWidth',1);
+hold on; 
+%plot(time(1:s:end)/1000,GyroY(1:s:end),'b','LineWidth',1);
+%plot(time(1:s:end)/1000,AngleZ(1:s:end),    'g','LineWidth',1);
+ylabel('\theta_z (rad)','FontSize', 14, 'FontName', 'CMU Serif');
+axis([0,maxt,-1,1]); % legend('Gx','Gy', 'Gz','Location','west')
    
  %
 axes(ha(3)); plot(time(1:s:end)/1000,AX(1:s:end),'k','LineWidth',2);
-    ylabel('x" (m/s^2)','FontSize', 14, 'FontName', 'CMU Serif');axis([0,maxt,-15,15]);
+    ylabel('x" (m/s^2)','FontSize', 14, 'FontName', 'CMU Serif');axis([0,maxt,-25,25]);
 axes(ha(4)); plot(time(1:s:end)/1000,AY(1:s:end),'k','LineWidth',2);
-    ylabel('y" (m/s^2)','FontSize', 14, 'FontName', 'CMU Serif');axis([0,maxt,-15,15]);
+    ylabel('y" (m/s^2)','FontSize', 14, 'FontName', 'CMU Serif');axis([0,maxt,-25,25]);
 axes(ha(5)); plot(time(1:s:end)/1000,AZ(1:s:end),'k','LineWidth',2);
-    ylabel('z" (m/s^2)','FontSize', 14, 'FontName', 'CMU Serif');axis([-0,maxt,-25,25]);
+    ylabel('z" (m/s^2)','FontSize', 14, 'FontName', 'CMU Serif');axis([-0,maxt,-25,20]);
 %%%%% now plot contact forces and torques %%%%%%%%%%
 axes(ha(6)); plot(time(1:s:end)/1000,Frecov1(1:s:end,1),'r','LineWidth',2);  
 hold on; plot(time(1:s:end)/1000,Frecov1(1:s:end,2),'b','LineWidth',2); 
     plot(time(1:s:end)/1000,Frecov1(1:s:end,3),'g','LineWidth',2); 
 ylabel('F(N)','FontSize', 14, 'FontName', 'CMU Serif');
-    axis([0,maxt,-2.2,2.2]); legend('F_x','F_y','F_z')
+    axis([0,maxt,-1.5,1.5]); legend('F_x','F_y','F_z','Location','west')
 axes(ha(7)); plot(time(1:s:end)/1000,Frecov1(1:s:end,4),'r','LineWidth',2);  
 hold on; plot(time(1:s:end)/1000,Frecov1(1:s:end,5),'b','LineWidth',2); 
     plot(time(1:s:end)/1000,Frecov1(1:s:end,6),'g','LineWidth',2); 
 ylabel('M (mN-M)','FontSize', 14, 'FontName', 'CMU Serif');
-    axis([0,maxt,-50,50]); legend('M_x','M_y','M_z')
+    axis([0,maxt,-50,50]); legend('M_x','M_y','M_z','Location','west')
 
 set(ha(1:6),'XTickLabel','') % only 1 time lable
 for i = 1:7
@@ -179,12 +178,12 @@ axes(ha(3)); plot(time(1:s:end)/1000,Frecov1(1:s:end,1),'r','LineWidth',2);
 hold on; plot(time(1:s:end)/1000,Frecov1(1:s:end,2),'b','LineWidth',2); 
     plot(time(1:s:end)/1000,Frecov1(1:s:end,3),'g','LineWidth',2); 
 ylabel('F(N)','FontSize', 14, 'FontName', 'CMU Serif');
-    axis([0,1.1*maxt,-0.9,0.9]); legend('F_x','F_y','F_z')
+    axis([0,1.1*maxt,-1.5,1.5]); legend('F_x','F_y','F_z')
 axes(ha(4)); plot(time(1:s:end)/1000,Frecov1(1:s:end,4),'r','LineWidth',2);  
 hold on; plot(time(1:s:end)/1000,Frecov1(1:s:end,5),'b','LineWidth',2); 
     plot(time(1:s:end)/1000,Frecov1(1:s:end,6),'g','LineWidth',2); 
 ylabel('M (mN-M)','FontSize', 14, 'FontName', 'CMU Serif');
-    axis([0,1.1*maxt,-30,30]); legend('M_x','M_y','M_z')
+    axis([0,1.1*maxt,-1,1]); legend('M_x','M_y','M_z')
 
 set(ha(1:3),'XTickLabel','') % only 1 time label
 for i = 1:4
@@ -272,28 +271,7 @@ xlabel('Leg position (rad)','FontSize', 18, 'FontName', 'CMU Serif');
 axes(ha(6));
 xlabel('Leg position (rad)','FontSize', 18, 'FontName', 'CMU Serif');
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% plot of raw sensor values to check for saturation
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-figure(5)
-clf;
-ha = tight_subplot(8,1,[.02 0],[.1 .08],[.1 .01]);
-   
- %
-axes(ha(1)); plot(time(1:s:end)/1000,S(1:s:end,1),'k','LineWidth',2);
-    ylabel('S1','FontSize', 14, 'FontName', 'CMU Serif');axis([0,maxt,0,4096]);
-axes(ha(2)); plot(time(1:s:end)/1000,S(1:s:end,2),'k','LineWidth',2);
-    ylabel('S2','FontSize', 14, 'FontName', 'CMU Serif');axis([0,maxt,0,4096]);
-axes(ha(3)); plot(time(1:s:end)/1000,S(1:s:end,3),'k','LineWidth',2);
-    ylabel('S3','FontSize', 14, 'FontName', 'CMU Serif');axis([0,maxt,0,4096]);
-axes(ha(4)); plot(time(1:s:end)/1000,S(1:s:end,4),'k','LineWidth',2);
-    ylabel('S4','FontSize', 14, 'FontName', 'CMU Serif');axis([0,maxt,0,4096]);
-axes(ha(5)); plot(time(1:s:end)/1000,S(1:s:end,5),'k','LineWidth',2);
-    ylabel('S5','FontSize', 14, 'FontName', 'CMU Serif');axis([0,maxt,0,4096]);
-axes(ha(6)); plot(time(1:s:end)/1000,S(1:s:end,6),'k','LineWidth',2);
-    ylabel('S6','FontSize', 14, 'FontName', 'CMU Serif');axis([0,maxt,0,4096]);
-axes(ha(7)); plot(time(1:s:end)/1000,S(1:s:end,7),'k','LineWidth',2);
-    ylabel('S7','FontSize', 14, 'FontName', 'CMU Serif');axis([0,maxt,0,4096]);
-axes(ha(8)); plot(time(1:s:end)/1000,S(1:s:end,8),'k','LineWidth',2);
-    ylabel('S8','FontSize', 14, 'FontName', 'CMU Serif');axis([0,maxt,0,4096]);
+%%%%%%%%%%%%%%%%%%%
+% now plot data on a cycle by cycle basis
+cycle_plot
 
