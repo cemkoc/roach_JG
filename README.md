@@ -4,10 +4,10 @@ This repository contains firmware and python control code for Josh's VelociRoACH
 with the SkinProc board for the tactile shell.
 
 Settings:
-https://github.com/ronf-ucb/imageproc-settings
+https://github.com/casarezc/imageproc-settings/tree/tactile
 
 Main code:
-https://github.com/ronf-ucb/roach_JG/tree/tactile
+https://github.com/casarezc/roach_JG/tree/tactile
 
 Library: 27 April 2015 branch compiles ok. Later versions changed encoders, PID, radio, packets etc.
 https://github.com/biomimetics/imageproc-lib/tree/c331ed52a4824d13d8d430589e5c245effd4c5d0
