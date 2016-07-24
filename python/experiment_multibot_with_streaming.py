@@ -84,14 +84,19 @@ def main():
     print "  ***************************"
     raw_input("  Press ENTER to start run ...")
     print ""
-    R1.skinStream(0)   ### set to 1 for live streming of data, 0 for storing in Flash, then sending
+    # send tactile commands here -- CemCanBrian July 24 2016
+    R1.getSkinSize()
+    time.sleep(.5)
+    R1.skinStream(1)   ### set to 1 for live streming of data, 0 for storing in Flash, then sending
     time.sleep(0.5)
+    # R1.RECORDSHELL = False # added by CEMCANBRIAN
     R1.startScan()
     time.sleep(0.5)
     # Initiate telemetry recording; the robot will begin recording immediately when cmd is received.
     for r in shared.ROBOTS:
         if r.SAVE_DATA:
             r.startTelemetrySave()
+            # r.RECORDSHELL = False
 
     # Sleep for a lead-in time before any motion commands
     time.sleep(EXPERIMENT_LEADIN_TIME_MS / 1000.0)

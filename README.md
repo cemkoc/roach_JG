@@ -3,6 +3,8 @@ RoACH
 This repository contains firmware and python control code for Josh's VelociRoACH robot
 with the SkinProc board for the tactile shell.
 
+This repository is part of the research project headed by Cem Koc, Can Koc, Brian Su in Biomimetic Millisystems Lab @ UC Berkeley.
+
 Settings:
 https://github.com/casarezc/imageproc-settings/tree/tactile
 
